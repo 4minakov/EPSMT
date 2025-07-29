@@ -1,0 +1,59 @@
+clear all
+close all
+addpath .\data
+load(['model_parameters_MC2.mat']);
+load(['Y0_MC2']);
+load Data_total_MC2_new.mat
+%%
+figure,
+ax1 = subplot(121);
+xpos = get(ax1,'Position');
+plot(xp(1,:)/R0,yp(1,:)/R0,'k','LineWidth',1), hold on
+plot(xp(end,:)/R0,yp(end,:)/R0,'k','LineWidth',1)
+axis equal tight, xlabel('x/R_0'),ylabel('y/R_0'),
+tt = title(['(a)    ']); tt.Units='Normalized'; tt.Position(1)=0;
+tt.HorizontalAlignment='left';
+annotation('arrow',[0.297395833333333 0.430208333333333],...
+    [0.617097061442565 0.796972395369546],'HeadStyle','none');
+annotation('arrow',[0.297395833333333 0.314583333333333],...
+    [0.617097061442564 0.616206589492431],'HeadStyle','none');
+text('FontWeight','bold','String','R_0',...
+    'Position',[0.373648124499297 -1.65793984437588 0]);
+text('FontWeight','bold','String','L',...
+    'Position',[3.65560212695715 2.53387432185862-1e-1 0]);
+annotation('textbox',...
+    [0.154571428571428 0.535714285714287 0.0561428571428572 0.0809523809523819],...
+    'String','\sigma_x^{\infty}',...
+    'LineStyle','none',...
+    'FontSize',12,...
+    'FitBoxToText','off');
+annotation('textbox',...
+    [0.305836309523809 0.306848153330791+5e-2 0.0561428571428572 0.0809523809523821],...
+    'String','\sigma_y^{\infty}',...
+    'LineStyle','none',...
+    'FontSize',12,...
+    'FitBoxToText','off');
+annotation('arrow',[0.299032738095238-2e-3 0.2984375-2e-3],...
+    [0.334286011109698 0.372217275155833],'LineWidth',1);
+annotation('arrow',[0.299255952380952-2e-3 0.299479166666667-2e-3],...
+    [0.901918755035407 0.869100623330365],'LineWidth',1);
+annotation('arrow',[0.463541666666667 0.40282738095238],...
+    [0.616847602086248 0.615466649705296],'LineWidth',1);
+annotation('arrow',[0.132440476190475 0.193154761904761],...
+    [0.616066658185982 0.617447610566934],'LineWidth',1);
+set(ax1,'Position',[xpos(1),xpos(2)+0.1,xpos(3),xpos(4)])
+subplot(122),
+pcolor(xp/R0,yp/R0,Ys*1e-6), hold on
+shading interp, 
+tt = title(['(b)           ']); tt.Units='Normalized'; tt.Position(1)=0;
+tt.HorizontalAlignment='left';
+plot(xp(1,:)/R0,yp(1,:)/R0,'k','LineWidth',1)
+c=colorbar('southoutside'); c.Label.String='MPa';c.Label.FontWeight='bold'; c.Label.FontSize=9;
+c.Label.Position = [40 0 0]; c.Label.Rotation=0; 
+axis equal tight, ylabel('y/R_0'),%xlabel('meters')
+axis([-1 1 -1 1]*2.5), %caxis([-10 10]*1e-3)
+colormap(gray(8))
+%%
+set(gcf,'PaperUnits','inches','PaperPosition',[0 0 7 4]),
+print('fig\Fig2','-dpng','-r300')
+print('fig\Fig2','-painters','-deps','-r300')
